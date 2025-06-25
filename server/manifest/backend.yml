@@ -8,8 +8,8 @@ entities:
     properties:
       - name
       - { name: email, type: email, validation: { required: true } }
-      - phone
-      - { name: photo, type: link }
+      - { name: phone, type: number }
+      - { name: photo, type: image }
     policies:
       read:
         - access: public
@@ -18,7 +18,7 @@ entities:
     properties:
       - { name: title, validation: { required: true } }
       - { name: description, type: text }
-      - { name: price, type: number }
+      - { name: price, type: money, options: { currency: 'USD' } }
       - {
           name: propertyType,
           type: choice,
