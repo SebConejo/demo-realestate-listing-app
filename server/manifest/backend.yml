@@ -1,31 +1,46 @@
 # This is a sample file for a backend.yml manifest backend.
 # Read more about the manifest format here: https:/manifest.build/docs
 
-name: My pet app 🐾
-entities:
-  Owner:
-    properties:
-      - name
-      - { name: birthdate, type: date }
+name: Real Estate Listings 🏠
 
-  Cat:
+entities:
+  Agent 👨‍💼:
     properties:
       - name
-      - { name: age, type: number }
-      - { name: birthdate, type: date }
-    belongsTo:
-      - Owner
+      - { name: email, type: email, validation: { required: true } }
+      - phone
+      - { name: photo, type: link }
     policies:
       read:
         - access: public
 
-  Homepage:
-    nameSingular: Home content
-    single: true
+  Property 🏡:
     properties:
-      - title
-      - { name: description, type: richText }
-      - { name: cover, type: image }
+      - { name: title, validation: { required: true } }
+      - { name: description, type: text }
+      - { name: price, type: number }
+      - {
+          name: propertyType,
+          type: choice,
+          options:
+            { values: ['House', 'Apartment', 'Condo', 'Penthouse', 'Loft'] },
+        }
+    belongsTo:
+      - Agent
     policies:
       read:
+        - access: public
+
+  Inquiry 📧:
+    properties:
+      - { name: customerName, validation: { required: true } }
+      - { name: customerEmail, type: email, validation: { required: true } }
+      - { name: customerPhone }
+      - { name: message, type: text }
+    belongsTo:
+      - Property
+    policies:
+      read:
+        - access: public
+      create:
         - access: public
